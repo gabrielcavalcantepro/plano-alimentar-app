@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@import "@fontsource/inria-serif/400.css";
+@import "@fontsource/inria-serif/400-italic.css";
+@import "@fontsource/inria-serif/700.css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+
+@theme {
+  --font-display: "Inria Serif", "Iowan Old Style", Georgia, serif;
+  --font-body: "Poppins", "Segoe UI", system-ui, sans-serif;
+
+  /* Brand — derived from #C84600 */
+  --color-brand-50: #fdf1e8;
+  --color-brand-100: #fbdfc9;
+  --color-brand-200: #f4bd91;
+  --color-brand-300: #ea9a63;
+  --color-brand-400: #db6f34;
+  --color-brand-500: #c84600;
+  --color-brand-600: #a83c00;
+  --color-brand-700: #832f00;
+  --color-brand-800: #5e2200;
+  --color-brand-900: #3d1600;
+
+  /* Espresso — warm near-black neutrals used for text + nav chrome */
+  --color-espresso-50: #f6f1ee;
+  --color-espresso-100: #ece2dc;
+  --color-espresso-200: #d8c7bc;
+  --color-espresso-300: #b7a094;
+  --color-espresso-400: #8d766a;
+  --color-espresso-500: #6b5648;
+  --color-espresso-600: #4d3c31;
+  --color-espresso-700: #382a22;
+  --color-espresso-800: #291d17;
+  --color-espresso-900: #1c130f;
+
+  /* Sage — secondary accent for positive states, icons, calm details */
+  --color-sage-50: #eef3ee;
+  --color-sage-100: #dbe8dc;
+  --color-sage-300: #9dbb9f;
+  --color-sage-500: #4c7359;
+  --color-sage-600: #3a5c46;
+  --color-sage-700: #2b4534;
+
+  /* Plum — reserved for "unavailable / em produção" states, kept distinct from alerts */
+  --color-plum-100: #eae6ef;
+  --color-plum-300: #b9adc6;
+  --color-plum-500: #6d5f7d;
+  --color-plum-600: #564a63;
+
+  /* Rose — rare, genuine alerts only */
+  --color-rose-100: #f7e3e1;
+  --color-rose-500: #ac3d34;
+
+  --color-canvas: #faf8f6;
+  --color-surface: #ffffff;
+
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  --shadow-soft: 0 1px 2px rgba(28, 19, 15, 0.04), 0 8px 24px -4px rgba(28, 19, 15, 0.08);
+  --shadow-lifted: 0 16px 40px -8px rgba(28, 19, 15, 0.22);
+  --shadow-nav: 0 -2px 20px rgba(28, 19, 15, 0.12);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-espresso-800);
+    font-family: var(--font-body);
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-200);
+    color: var(--color-espresso-900);
+  }
+
+  /* Horizontal scrollers (bottom nav, option chips) — no visible scrollbar chrome */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
