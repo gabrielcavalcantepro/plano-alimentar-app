@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { BrandMark } from "../icons";
 
 export function PageHeader({
   eyebrow,
@@ -17,7 +16,7 @@ export function PageHeader({
       <div className="max-w-2xl">
         {eyebrow ? (
           <div className="mb-2 flex items-center gap-2 text-brand-600">
-            <BrandMark className="h-3.5 w-3.5" />
+            <img src="/LOGO-LARANJA.png" alt="" className="h-5 w-auto object-contain" />
             <span className="text-xs font-semibold uppercase tracking-[0.14em]">{eyebrow}</span>
           </div>
         ) : null}

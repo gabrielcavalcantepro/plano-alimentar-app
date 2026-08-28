@@ -11,23 +11,9 @@ const base = {
   strokeLinejoin: "round" as const,
 };
 
-/** The signature shape — leaf/drop hybrid, reused across the whole app (icon, hydration tracker, dividers). */
-export const DROP_OUTLINE_PATH =
-  "M100,18 C130,34 165,60 162,100 C159,142 132,172 108,186 C82,172 40,146 38,104 C36,62 68,32 100,18 Z";
-const DROP_VEIN_PATH = "M97,36 C90,72 90,128 100,168 C110,128 110,72 103,36 Z";
-
 /** A literal water droplet (point on top, round bottom) — used for the hydration tracker only. */
 export const WATER_DROP_PATH =
   "M100,16 C140,64 156,102 156,132 A56,56 0 1 1 44,132 C44,102 60,64 100,16 Z";
-
-/** The brand mark — a leaf/drop hybrid, echoed across the whole app as the signature shape. */
-export function BrandMark(props: IconProps) {
-  return (
-    <svg viewBox="0 0 200 200" fill="currentColor" {...props}>
-      <path fillRule="evenodd" d={`${DROP_OUTLINE_PATH} ${DROP_VEIN_PATH}`} />
-    </svg>
-  );
-}
 
 export function IconHome(props: IconProps) {
   return (

@@ -11,7 +11,11 @@ export function BottomNav() {
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-40 border-t border-espresso-800 bg-espresso-900 lg:hidden"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      style={{
+        paddingBottom: "env(safe-area-inset-bottom)",
+        paddingLeft: "env(safe-area-inset-left)",
+        paddingRight: "env(safe-area-inset-right)",
+      }}
       aria-label="Navegação principal"
     >
       <ul className="no-scrollbar flex snap-x snap-mandatory items-stretch gap-1 overflow-x-auto px-2 py-2">

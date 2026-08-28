@@ -1,14 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { NAV_ITEMS, INSTAGRAM_URL } from "../../lib/navigation";
-import { BrandMark, IconInstagram } from "../icons";
+import { IconInstagram } from "../icons";
 
 export function SidebarNav() {
   return (
-    <aside className="hidden w-72 shrink-0 flex-col bg-espresso-900 px-6 py-8 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:flex lg:overflow-y-auto">
+    <aside
+      className="hidden w-72 shrink-0 flex-col bg-espresso-900 px-6 pb-8 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:flex lg:overflow-y-auto"
+      style={{ paddingTop: "max(env(safe-area-inset-top), 2rem)" }}
+    >
       <div className="flex items-center gap-3 px-2">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-500 text-brand-50">
-          <BrandMark className="h-5 w-5" />
-        </span>
+        <img src="/icons/icon-192.png" alt="" className="h-10 w-10 shrink-0 rounded-xl" />
         <div className="min-w-0">
           <p className="truncate font-display text-lg leading-tight text-white">Plano Alimentar</p>
           <p className="truncate text-xs tracking-wide text-espresso-300">para lactantes</p>

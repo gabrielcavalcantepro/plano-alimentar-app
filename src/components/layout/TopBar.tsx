@@ -1,13 +1,18 @@
 import { INSTAGRAM_URL } from "../../lib/navigation";
-import { BrandMark, IconInstagram } from "../icons";
+import { IconInstagram } from "../icons";
 
 export function TopBar() {
   return (
-    <header className="flex items-center justify-between px-4 py-4 lg:hidden">
+    <header
+      className="flex items-center justify-between pb-4 lg:hidden"
+      style={{
+        paddingTop: "max(env(safe-area-inset-top), 1rem)",
+        paddingLeft: "max(env(safe-area-inset-left), 1rem)",
+        paddingRight: "max(env(safe-area-inset-right), 1rem)",
+      }}
+    >
       <div className="flex items-center gap-2.5">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-500 text-brand-50">
-          <BrandMark className="h-4 w-4" />
-        </span>
+        <img src="/icons/icon-192.png" alt="" className="h-8 w-8 shrink-0 rounded-lg" />
         <p className="font-display text-base leading-none text-espresso-900">Plano Alimentar</p>
       </div>
       <a

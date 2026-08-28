@@ -55,17 +55,25 @@ Pra testar a instalação do PWA de verdade, use `npm run preview` (ou publique 
 - **Tipografia:** Inria Serif nos títulos, Poppins no corpo (a especificação permitia
   Poppins ou Inter — Poppins foi escolhida por soar mais acolhedora/arredondada,
   combinando melhor com o tom "cuidado" do produto do que a Inter, mais neutra).
-- **Assinatura visual:** um símbolo próprio (folha + gota estilizadas, em
-  `src/components/icons/index.tsx` como `BrandMark`, também usado como base do ícone do
-  PWA) que aparece no wordmark, no rodapé da barra lateral, no tracker de hidratação
-  (`ProgressDrop`) e como acento em pontos-chave da UI. Fugimos de propósito do combo
-  "fundo creme + serifado + terracota" mencionado na especificação como clichê: o fundo
-  de conteúdo é branco/quase-neutro (não creme), e o menu de navegação (lateral no
-  desktop, inferior no mobile) usa um marrom-espresso escuro — um contraste tonal que dá
-  ar de "plataforma premium" em vez de página de landing genérica.
+- **Assinatura visual:** a logo oficial (mãe + coração + bebê estilizados) fornecida pela
+  nutricionista — ver seção **Logo** abaixo pra onde cada variante é usada. O tracker de
+  hidratação (`ProgressDrop`) continua com sua própria gota literal, separada da marca,
+  por ser mais clara como indicador de "água" do que a logo em si.
+  Fugimos de propósito do combo "fundo creme + serifado + terracota" mencionado na
+  especificação como clichê: o fundo de conteúdo é branco/quase-neutro (não creme), e o
+  menu de navegação (lateral no desktop, inferior no mobile) usa um marrom-espresso
+  escuro — um contraste tonal que dá ar de "plataforma premium" em vez de página de
+  landing genérica.
 - Foco de teclado visível globalmente (`:focus-visible` em `src/index.css`),
   `prefers-reduced-motion` respeitado (reduz todas as transições/animações), modal de
   receita usa `<dialog>` nativo (focus trap e Esc para fechar de graça).
+- **Detalhes de iOS testados num iPhone real:** `input, select, textarea { font-size: 16px }`
+  em `src/index.css` evita o zoom automático que o Safari aplica em qualquer campo com
+  fonte menor que 16px ao focar. E como o `viewport-fit=cover` (`index.html`) faz o app
+  ocupar a tela inteira, `TopBar` e `SidebarNav` somam `env(safe-area-inset-top)` ao
+  padding do topo (com um `max()` garantindo o padding normal em telas sem notch), senão
+  o relógio/sinal do iPhone cobre o cabeçalho quando instalado na tela de início — o
+  `BottomNav` já fazia isso do lado de baixo desde o início.
 
 ## Estrutura
 
@@ -75,13 +83,14 @@ src/
     layout/     AppShell, SidebarNav (desktop), BottomNav (mobile/tablet), TopBar, Footer
     ui/         Button, Badge, Card, SegmentedControl, AccordionItem, Drawer, EmptyState, ProgressDrop
     cardapio/   MenuParts — renderiza texto do cardápio misturado com links de receita/âncora
-    icons/      ícones SVG próprios (sem biblioteca externa) + BrandMark
+    icons/      ícones SVG próprios (sem biblioteca externa)
   data/         cardapio.ts, receitas.ts, bonus.ts, consultorias.ts, materialComplementar.ts, access.ts
   hooks/        useLocalStorage, useHydration, useInstallPrompt, usePrefersReducedMotion
   lib/          time.ts (janelas de refeição), platform.ts (detecção iOS/Android), navigation.ts, dicas.ts, youtube.ts
   pages/        Inicio, Cardapio, Receitas, Bonus (inclui as consultorias), MaterialComplementar, ComoBaixar
-design/         fonte do ícone (icon-source.svg) + preview
-scripts/        generate-icons.mjs — regenera os PNGs do PWA a partir do design/icon-source.svg
+public/         LOGO-LARANJA.png, LOGO-BRANCA.png, LOGO-ICONE-FUNDO-LARANJA.png,
+                LOGO-ICONE-FUNDO-BRANCO.png — arte-fonte da logo oficial (ver seção "Logo")
+scripts/        generate-icons.mjs — regenera os PNGs do PWA a partir de public/LOGO-ICONE-FUNDO-LARANJA.png
 ```
 
 ## Arquitetura de navegação e responsividade
@@ -192,14 +201,34 @@ O item 6 do Apêndice ("combo, leve todos com desconto") não é um material de 
 é uma oferta de checkout. Por isso ele não aparece em `materialComplementar.ts`; quem
 compra o combo simplesmente recebe um build com os 5 ids liberados.
 
+## Logo
+
+A logo oficial (mãe abraçando o bebê dentro de um coração, com a "cabeça" representada
+por um círculo) veio pronta da nutricionista em 4 arquivos, direto em `public/`:
+
+| Arquivo | O quê | Onde é usado |
+|---|---|---|
+| `LOGO-LARANJA.png` | Traço laranja (`#C84600`), fundo transparente | Ícone pequeno de assinatura em fundo claro — eyebrow do `PageHeader` |
+| `LOGO-BRANCA.png` | Traço branco, fundo transparente | Sobre fundos escuros — acento no card do Instagram na Início (`Inicio.tsx`) |
+| `LOGO-ICONE-FUNDO-LARANJA.png` | Quadrado com cantos arredondados, fundo laranja + marca branca | Badge do cabeçalho (`SidebarNav`, `TopBar`) e fonte de todos os ícones do PWA |
+| `LOGO-ICONE-FUNDO-BRANCO.png` | Igual ao de cima, mas fundo branco + marca laranja | Reserva, ainda sem uso no app — fica disponível caso precise de um ícone claro em algum contexto futuro |
+
+Não existe mais um `BrandMark` (SVG vetorial) no código — como a logo real só existe em
+PNG, os componentes usam `<img>` apontando direto pros arquivos acima, escolhendo a
+variante clara/escura conforme o fundo de cada lugar.
+
 ## PWA
 
 - **Manifest:** gerado por `vite-plugin-pwa` a partir da config em `vite.config.ts`
   (nome, cores, ícones, `display: "standalone"`).
-- **Ícones:** `design/icon-source.svg` é a arte-fonte (a mesma marca folha/gota da
-  identidade visual). `scripts/generate-icons.mjs` usa `sharp` pra gerar todos os
-  tamanhos em `public/icons/` (192, 512, 512 maskable, apple-touch-icon). Pra trocar o
-  ícone (ex.: quando a nutricionista aprovar uma logo definitiva), edite o SVG e rode:
+- **Ícones:** `scripts/generate-icons.mjs` parte de `public/LOGO-ICONE-FUNDO-LARANJA.png`
+  (que já vem com cantos arredondados e fundo transparente nas quinas) e usa `sharp`
+  pra: (1) achatar essas quinas transparentes de volta pra um quadrado cheio — pra não
+  competir com o arredondamento que o próprio sistema operacional aplica — e gerar os
+  tamanhos 64/192/512/apple-touch-icon a partir daí; (2) gerar uma versão à parte do
+  ícone "maskable" (`icon-maskable-512.png`) com a marca reduzida a ~72% do quadro, já
+  que o Android recorta esse ícone num círculo/squircle e a marca precisa caber dentro
+  da "zona segura" pra não ser cortada. Pra regenerar depois de uma logo nova:
   ```bash
   node scripts/generate-icons.mjs
   ```
@@ -258,16 +287,10 @@ o agendamento local por assinaturas reais de push.
 - **Arquivos do Material Complementar** — mesma lógica dos guias de Bônus, em
   `src/data/materialComplementar.ts` (`arquivoUrl`).
 - **Conteúdo do Cardápio APLV** — toggle existe, sem conteúdo (ver seção específica acima).
-- **Logo em alta resolução** — a especificação perguntava se deveríamos manter a ave/fênix
-  do material original (verde-oliva) ou propor algo novo alinhado à nova paleta.
-  Optamos por uma marca nova (folha/gota, em `#C84600`/creme) porque a ave em verde-oliva
-  não conversava com a nova identidade em terracota — mas é só um ponto de partida:
-  `design/icon-source.svg` é fácil de substituir por uma logo definitiva se a
-  nutricionista preferir manter a referência da ave.
 
-Já resolvidos numa rodada anterior de ajustes: URL real do Instagram, e os 3 links de
-consultoria (2 do YouTube embutidos no app, 1 do Google Drive como link externo) — ver
-seção **Bônus** acima.
+Já resolvidos em rodadas anteriores de ajustes: URL real do Instagram; os 3 links de
+consultoria (2 do YouTube embutidos no app, 1 do Google Drive como link externo, ver
+seção **Bônus** acima); e a logo em alta resolução (ver seção **Logo** acima).
 
 ## Decisões que vale registrar
 

@@ -4,7 +4,6 @@ import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { ProgressDrop } from "../components/ui/ProgressDrop";
 import {
-  BrandMark,
   IconArrowRight,
   IconBell,
   IconBowl,
@@ -43,7 +42,7 @@ function NomeOnboarding({ onDone }: { onDone: (nome: string) => void }) {
           onChange={(e) => setValor(e.target.value)}
           placeholder="Seu nome"
           maxLength={30}
-          className="w-36 rounded-full border border-espresso-200 bg-white px-4 py-2 text-sm text-espresso-800 outline-none focus-visible:border-brand-400 sm:w-44"
+          className="w-36 rounded-full border border-espresso-200 bg-white px-4 py-2 text-base text-espresso-800 outline-none focus-visible:border-brand-400 sm:w-44"
         />
         <Button type="submit" size="sm">
           Salvar
@@ -258,7 +257,7 @@ export function Inicio() {
             <span className="block text-sm font-semibold">Seguir no Instagram</span>
             <span className="block truncate text-xs text-espresso-300">{INSTAGRAM_HANDLE}</span>
           </span>
-          <BrandMark className="h-4 w-4 shrink-0 text-brand-400" />
+          <img src="/LOGO-BRANCA.png" alt="" className="h-6 w-auto shrink-0 object-contain opacity-70" />
         </a>
       </div>
     </div>
